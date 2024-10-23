@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chat app</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <ul id="messages">
+        <% messages.forEach(message=> { %>
+            <li class="message <%= message.isSent ? 'right' : 'left' %>">
+
+                <%= message.isSent ? 'You' : message.senderId.username %>:
+
+                    <%= message.message %>
+
+                        <small class="time_container">
+                            <%=new Date(message.createdAt).toLocaleTimeString([], { hour: '2-digit' , minute: '2-digit'
+                                , hour12: true }); %>
+                        </small>
+            </li>
+            <% }) %>
+    </ul>
+    <form id="form" action="">
+        <input id="receiverInput" autocomplete="off" placeholder="Receiver User Name" />
+        <input id="msgInput" autocomplete="off" placeholder="Type a message" />
+        <button>Send</button>
+    </form>
+
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        // Inject server-sent variable into client-side JavaScript
+        const user = '<%= user %>';
+        console.log(user);
+    </script>
+    <script src="index.js"></script>
+</body>
+
+</html>
