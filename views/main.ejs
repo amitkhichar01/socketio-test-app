@@ -5,41 +5,107 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>chat app</title>
-    <link rel="stylesheet" href="style.css">
-
+    <link rel="stylesheet" href="./styles/output.css">
 </head>
 
 <body>
+    <div id="add-friend-form"
+        class="hidden absolute flex justify-center items-center w-screen h-screen bg-[#222222d5] text-white">
+        <div class="w-[350px] p-8 bg-black rounded-lg text-center shadow-xl">
+            <form action="#" method="#">
+                <input id="add-friend-input" type="text" name="username" placeholder="Enter your friend name" required
+                    class="appearance-none border-none focus:ring-0 outline-none w-full p-3 mb-5 bg-gray-700 text-white placeholder-gray-500 rounded-lg text-lg">
+                <button type="submit" id="add-friend-submit-btn"
+                    class="w-full p-3 bg-red-600 text-white rounded-lg text-lg hover:bg-red-500 transition-colors duration-300">Add
+                    Friend</button>
 
-    <ul id="messages">
-        <% messages.forEach(message=> { %>
-            <li class="message <%= message.isSent ? 'right' : 'left' %>">
+                <p id="add-friend-close-btn" class="text-red-600 pt-4 underline cursor-pointer">close</p>
+            </form>
+        </div>
+    </div>
 
-                <%= message.isSent ? 'You' : message.senderId.username %>:
+    <div id="join-group-form"
+        class=" hidden absolute flex justify-center items-center w-screen h-screen bg-[#222222d5] text-white">
+        <div class="w-[350px] p-8 bg-black rounded-lg text-center shadow-xl">
+            <form action="#" method="#">
+                <input id="join-group-input" type="text" name="groupName" placeholder="Enter Group Name" required
+                    class="appearance-none border-none focus:ring-0 outline-none w-full p-3 mb-5 bg-gray-700 text-white placeholder-gray-500 rounded-lg text-lg">
+                <button type="submit" id="join-group-submit-btn"
+                    class="w-full p-3 bg-red-600 text-white rounded-lg text-lg hover:bg-red-500 transition-colors duration-300">Join
+                    Group</button>
 
-                    <%= message.message %>
+                <p id="join-group-close-btn" class="text-red-600 pt-4 underline cursor-pointer">close</p>
+            </form>
+        </div>
+    </div>
 
-                        <small class="time_container">
-                            <%=new Date(message.createdAt).toLocaleTimeString([], { hour: '2-digit' , minute: '2-digit'
-                                , hour12: true }); %>
-                        </small>
-            </li>
-            <% }) %>
-    </ul>
-    <form id="form" action="">
-        <input id="receiverInput" autocomplete="off" placeholder="Receiver User Name" />
-        <input id="msgInput" autocomplete="off" placeholder="Type a message" />
-        <button>Send</button>
-    </form>
+    <div id="create-group-form"
+        class="hidden absolute flex justify-center items-center w-screen h-screen bg-[#222222d5] text-white">
+        <div class="w-[350px] p-8 bg-black rounded-lg text-center shadow-xl">
+            <form action="#" method="#">
+                <input id="create-group-input" type="text" name="groupName" placeholder="Enter Group Name" required
+                    class="appearance-none border-none focus:ring-0 outline-none w-full p-3 mb-5 bg-gray-700 text-white placeholder-gray-500 rounded-lg text-lg">
+                <button type="submit" id="create-group-submit-btn"
+                    class="w-full p-3 bg-red-600 text-white rounded-lg text-lg hover:bg-red-500 transition-colors duration-300">Create
+                    Group</button>
+
+                <p id="create-group-close-btn" class="text-red-600 pt-4 underline cursor-pointer">close</p>
+            </form>
+        </div>
+    </div>
+
+    <div class="flex flex-row  w-screen h-screen overflow-hidden">
+        <div class="flex flex-col w-1/3 h-full text-white bg-[#2e2e2e] border-r border-black">
+            <h1 class="bg-[#2e2e2e] p-2 text-xl font-semibold border-b border-black">
+                Chats
+            </h1>
+
+            <ul id="friend-container" class="flex-1 overflow-y-auto list-none">
+                <% user.friends.forEach((element)=> { %>
+                    <li class="p-2 cursor-pointer bg-[#4f4f4f] hover:bg-[#3f3f3f] rounded m-1" data-is-group="false">
+                        <%=element.username%>
+                    </li>
+                    <% }) %>
+            </ul>
+
+            <div class="p-4 space-y-2 text-black">
+                <button id="add-friend-btn" class="w-full py-2 bg-[#25d366] rounded-md">Add Friend</button>
+                <button id="join-group-btn" class="w-full py-2 bg-[#34b7f1] rounded-md">Join Group</button>
+                <button id="create-group-btn" class="w-full py-2 bg-[#25d366] rounded-md">Create Group</button>
+            </div>
+        </div>
+
+        <div id="helper-container" class="bg-[#075e54] flex items-center justify-center w-full h-full">
+            <h1 class="text-4xl">Start chat with Friends</h1>
+        </div>
+
+        <div id="msg-main-container" class="hidden flex flex-col w-full h-full">
+            <div class="bg-[#2e2e2e] p-2 text-white flex items-center border-b border-black">
+                <div class="w-7 h-7 rounded-full bg-gray-300 mr-3"></div>
+                <h1 id="chat-friend-name" class="text-lg font-semibold">Friend's Name</h1>
+            </div>
+
+            <div id="msg-container" class="flex-1 py-4 px-10 overflow-y-auto bg-[#075e54]"> </div>
+
+            <div class="bg-[#2e2e2e] flex items-center border-t border-black">
+                <input id="msg-input-field" type="text"
+                    class="appearance-none border-none focus:ring-0 outline-none w-full p-2 bg-[#2e2e2e] text-white text-md"
+                    placeholder="Type a message..." />
+                <button id="send-msg-btn" class="h-full px-6 bg-[#25d366] text-lg">Send</button>
+            </div>
+        </div>
+    </div>
 
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
         // Inject server-sent variable into client-side JavaScript
-        const user = '<%= user %>';
-        console.log(user);
+        const currentUser = '<%= user.username %>';
+        const messagesJson = '<%- JSON.stringify(messages) %>';
+        const messages = JSON.parse(messagesJson);
     </script>
     <script src="index.js"></script>
+
 </body>
 
 </html>

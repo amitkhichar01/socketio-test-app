@@ -1,24 +1,30 @@
 {
-  "name": "socketio-test-app",
-  "version": "1.0.0",
-  "main": "serverA.js",
-  "type": "module",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
-    "ejs": "^3.1.10",
-    "express": "^4.21.1",
-    "mongoose": "^8.7.2",
-    "nodemon": "^3.1.7",
-    "path": "^0.12.7",
-    "socket.io": "^4.8.0",
-    "socket.io-client": "^4.8.0"
-  }
+    "name": "socketio-test-app",
+    "version": "1.0.0",
+    "main": "serverA.js",
+    "type": "module",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "dependencies": {
+        "cors": "^2.8.5",
+        "dotenv": "^16.4.5",
+        "ejs": "^3.1.10",
+        "express": "^4.21.1",
+        "mongoose": "^8.7.2",
+        "nodemon": "^3.1.7",
+        "path": "^0.12.7",
+        "socket.io": "^4.8.0",
+        "socket.io-client": "^4.8.0"
+    },
+    "devDependencies": {
+        "autoprefixer": "^10.4.20",
+        "postcss": "^8.4.49",
+        "postcss-cli": "^11.0.0",
+        "tailwindcss": "^3.4.14"
+    }
 }

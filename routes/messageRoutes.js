@@ -1,4 +1,4 @@
-import { sendPrivateMessage } from "../controllers/messageController.js";
+import { checkUser, sendPrivateMessage, createGroup, joinGroup, sendGroupMessage } from "../controllers/messageController.js";
 
 export const handleSockets = (io) => {
     const users = {};
@@ -6,11 +6,15 @@ export const handleSockets = (io) => {
     io.on("connection", (socket) => {
         console.log(`Server ${socket.id} connected`);
 
-        socket.on("join", ({ user }) => {
-            users[user] = socket.id;
+        socket.on("join", (currentUser) => {
+            users[currentUser] = socket.id;
         });
 
-        socket.on("private_message", (data) => sendPrivateMessage(socket, users, data));
+        socket.on("checkUser", (data) => checkUser(socket, data));
+        socket.on("privateMessage", (data) => sendPrivateMessage(socket, users, data));
+        socket.on("createGroup", (data) => createGroup(socket, data));
+        socket.on("joinGroup", (data) => joinGroup(io, socket, data));
+        socket.on("groupMessage", (data) => sendGroupMessage(io, data));
 
         socket.on("disconnect", () => {
             console.log(`Client disconnected: ${socket.id}`);

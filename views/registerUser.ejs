@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chat app</title>
+    <link rel="stylesheet" href="./styles/output.css">
+</head>
+
+<body class="flex justify-center items-center h-screen bg-gray-900 text-white">
+    <div class="w-[350px] p-8 bg-gray-800 rounded-lg text-center shadow-xl">
+        <h1 class="text-4xl mb-2">Welcome 👋</h1>
+        <p class="text-lg text-gray-400 mb-5">Set a username to get started</p>
+        <form action="/submit" method="POST">
+            <input type="text" name="username" placeholder="Username" required
+                class="appearance w-full p-3 mb-5 bg-gray-700 text-white placeholder-gray-500 rounded-lg text-lg">
+            <button type="submit"
+                class="w-full p-3 bg-red-600 text-white rounded-lg text-lg hover:bg-red-500 transition-colors duration-300">Enter</button>
+        </form>
+    </div>
+</body>
+
+</html>

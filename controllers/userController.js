@@ -1,33 +1,52 @@
 import User from "../models/user.js";
 import Message from "../models/message.js";
 
-export const getUserChat = async (req, res) => {
-    const { username } = req.params;
+export const registerUser = async (req, res) => {
+    res.render("registerUser.ejs");
+};
+
+export const addUser = async (req, res) => {
+    const { username } = req.body;
 
     try {
         let user = await User.findOne({ username });
 
-        // If user does not exist, create a new user
         if (!user) {
-            user = new User({ username });
-            await user.save();
-            return res.render("main.ejs", { user: user.username, messages: [] });
+            let newUser = await User.create({ username });
+            return res.redirect(`/${username}`);
+        }
+
+        res.redirect(`/${username}`);
+    } catch (error) {
+        console.error("Error adding user", error);
+        res.status(500).send("Internal server error");
+    }
+};
+
+export const getUserChat = async (req, res) => {
+    const { username } = req.params;
+
+    try {
+        let user = await User.findOne({ username }).populate({
+            path: "friends",
+            select: "username",
+        });
+
+        if (!user) {
+            return res.status(404).send("User does not exist");
         }
 
         // Fetch sent and received messages
-        const sentMessages = await Message.find({ senderId: user._id });
-        const receivedMessages = await Message.find({ receiverId: user._id }).populate("senderId", "username").exec();
+        const [sentMessages, receivedMessages] = await Promise.all([
+            Message.find({ senderId: user._id }).populate("senderId", "username").populate("receiverId", "username").exec(),
+            Message.find({ receiverId: user._id }).populate("senderId", "username").populate("receiverId", "username").exec(),
+        ]);
 
-        // Combine sent and received messages, flagging each accordingly
-        const messages = [...sentMessages.map((msg) => ({ ...msg._doc, isSent: true })), ...receivedMessages.map((msg) => ({ ...msg._doc, isSent: false }))];
+        const messages = [...sentMessages, ...receivedMessages];
 
-        // Sort messages by their creation time
-        messages.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
-
-        // Render the main.ejs template with user and messages
         res.render("main.ejs", {
-            user: username,
-            messages,
+            user: user,
+            messages: messages || [],
         });
     } catch (error) {
         console.error("Error fetching user or messages:", error);
